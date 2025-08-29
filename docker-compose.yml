@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:15
+    container_name: dj_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: debs
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: db_djfull
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  pgadmin_data:
